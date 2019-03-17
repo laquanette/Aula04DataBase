@@ -1,0 +1,49 @@
+create table Cliente (
+	ClienteID int NOT NULL,
+    Nome varchar(255) NOT NULL,
+    CPF int(11) NOT NULL,
+    EnderecoID int NOT NULL,
+    PRIMARY KEY (ClienteID),
+    FOREIGN KEY (EnderecoID) REFERENCES Endereco(EnderecoID)
+);
+create table Cidade (
+	CidadeID int,
+    Nome varchar(255) NOT NULL,
+    Sigla char(2) NOT NULL,
+    PRIMARY KEY (CidadeID)
+);
+create table Endereco (
+	EnderecoID int,
+    Rua varchar(255) NOT NULL,
+    Numero int NOT NULL,
+    Complemento varchar(255),
+    CEP int(8) NOT NULL,
+    CidadeID int,
+    PRIMARY KEY (EnderecoID),
+    FOREIGN KEY (CidadeID) REFERENCES Cidade(CidadeID)
+);
+create table Usuario (
+	IDUsuario int,
+    Nome varchar(255) NOT NULL,
+    Login varchar(255) NOT NULL,
+    CPF int(11) NOT NULL,
+    Senha varchar(255) NOT NULL,
+    EnderecoID int,
+    PRIMARY KEY (IDUsuario),
+    FOREIGN KEY (EnderecoID) REFERENCES Endereco(EnderecoID)
+);
+create table Recibo (
+    ReciboID int,
+    Sequencia int NOT NULL,
+    Valor int NOT NULL,
+    Data date NOT NULL,
+    Assinatura varchar(255) NOT NULL,
+    Referente varchar(255) NOT NULL,
+    CidadeID int,
+    UsuarioID int,
+    ClienteID int,
+    PRIMARY KEY (ReciboID),
+    FOREIGN KEY (CidadeID) REFERENCES Cidade(CidadeID),
+    FOREIGN KEY (UsuarioID) REFERENCES Usuario(UsuarioID),
+    FOREIGN KEY (ClienteID) REFERENCES Cliente(ClienteID)
+);
